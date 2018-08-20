@@ -42,6 +42,22 @@ ELECTRIC_CHARGE = 1.6e-19 # Fundamental charge in units of C
 PLANCK_CONSTANT = 4.135667e-15# Planck's constant in eVs
 SPEED_OF_LIGHT = 3.0e14 # speed of light in microns per second
 HC = 1.23984193 # hc [eV.um]
+TWO_PI = 2.0 * math.pi
+
+"""
+Dictionaries
+"""
+# define dictionary to contain the SI prefix values
+SI_Prefices = {"femto":1.0e-15, "pico":1.0e-12, "nano":1.0e-9, "micro":1.0e-6, 
+               "milli":1.0e-3, "one":1.0, "kilo":1.0e+3, "Mega":1.0e+6, "Giga":1.0e+9}
+
+def dict_contains_key(dict, key):
+    
+    return True if key in dict else False
+
+def dict_contains_value(dict, value):
+    
+    return True if value in dict.values() else False
 
 """
 Test import
@@ -1177,6 +1193,18 @@ def list_has_negative(data):
 Unit Conversions
 
 """ 
+
+def convert_deg_rad(degValue):
+    # convert value in degrees to value in radians
+    # V_{rad} = pi V_{deg} / 180
+
+    return (math.pi * degValue / 180)
+
+def convert_rad_deg(radValue):
+    # convert value in radians to value in degrees
+    # V_{deg} = 180 V_{rad} / pi
+
+    return (180 * radValue / math.pi)
 
 def convert_um_cm(umValue):
     # convert a length in microns to centimetres
