@@ -420,7 +420,7 @@ def read_matrix(thepath, delimiter = ',', ignore_first_line = False, loud = Fals
     # contains text and should not be counted when reading in data
     # R. Sheehan 8 - 8 - 2014
 
-    thefile = file(thepath,"r") # open file for reading
+    thefile = open(thepath,"r") # open file for reading
 
     # check that the files are available
     if thefile.closed:
