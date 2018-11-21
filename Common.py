@@ -11,13 +11,15 @@
 # In python this is known as a Module
 # https://docs.python.org/3/tutorial/modules.html
 
+MOD_NAME_STR = "Common" # use this in exception handling messages
+
 """
 Libraries
 """
 
 # In python 3 the print(statement was replaced by a print(function
 # see https://stackoverflow.com/questions/13415181/brackets-around-print-in-python
-from __future__ import print_function
+#from __future__ import print_function
 
 import os
 import glob
@@ -359,28 +361,31 @@ def write_two_columns(thepath, first_line, col1_data, col2_data, wr_mode):
         print("Error: Common.write_two_columns()")
         print("Input lists were not defined correctly")
 
-def write_data(thepath, thedata, quiet = 0):
+def write_data(thepath, thedata, loud = False):
     # write a vector containing data to a file
     # R. Sheehan 7 - 8 - 2014
 
-    thefile = file(thepath,"w") # create a file for writing
+    FUNC_NAME = ".write_data()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
-    if thefile.closed:
-        print("Could not open",thefile.name)
-    else:
-        # Write the data to the files
-        if quiet:
-            print("The file",thefile.name,"is open")
+    try:
+        if thepath == "" or thedata == None or len(thedata) == 0:
+            raise Exception
+        else:
+            thefile = open(thepath, "w")
+            if thefile.closed:
+                raise Exception
+            else:
+                if loud: print("File:",thepath,"open for writing\n")
 
-        for data in thedata:
-            thefile.write("%(num)0.9f\n"%{"num":data})
+                for data in thedata:
+                    thefile.write("%(num)0.9f\n"%{"num":data})
 
-        thefile.close()
-
-    # delete the file object
-    del thefile
-
-    return 0
+                thefile.close()
+                
+                if loud: print("File:",thepath,"closed\n")
+    except Exception:
+        print(ERR_STATEMENT)
 
 def write_matrix(thepath, thedata, delim = ', ', quiet = 0):
     # write a matrix of data to a file
@@ -896,16 +901,16 @@ def linear_fit(xdata, ydata, initial_apprs, loud = False):
             if success:
                 if loud: print("Fit polynomial is ",p1[0],"+",p1[1],"x")
 
-                if loud:
-                    plot(xdata, ydata, "r^", xdata, fitfunc(p1, xdata), "g-")
-                    # Legend the plot
-                    title("Fitted data")
-                    xlabel("x")
-                    ylabel("y")
-                    legend(('Data', 'Fit'),loc='best')
-                    ax = axes()
-                    axis( [np.min(xdata), np.max(xdata), np.min(ydata), np.max(ydata)] )
-                    show()
+                #if loud:
+                #    plot(xdata, ydata, "r^", xdata, fitfunc(p1, xdata), "g-")
+                #    # Legend the plot
+                #    title("Fitted data")
+                #    xlabel("x")
+                #    ylabel("y")
+                #    legend(('Data', 'Fit'),loc='best')
+                #    ax = axes()
+                #    axis( [np.min(xdata), np.max(xdata), np.min(ydata), np.max(ydata)] )
+                #    show()
 
                 return p1
             else:
@@ -1229,6 +1234,19 @@ def convert_nm_angs(nmValue):
     # V_{Angstroms} = 10 V_{nm}
 
     return (10*nmValue)
+
+def convert_invcm_nm(invcmValue):
+    # convert inverse centimetres to nanometres
+    # R. Sheehan 13 - 11 - 2018
+
+    try:
+        if invcmValue > 0.0:
+            return (1.0e+7 / invcmValue)
+        else:
+            raise RuntimeError
+    except RuntimeError:
+        print("Error: Common.convert_invcm_nm()")
+        return 0.0
 
 def convert_PmW_PdBm(mWvalue):
     # convert power in mW to power in dBm
