@@ -826,19 +826,52 @@ def average_error_data(file_str, avg_file_name, err_file_name, loud = False):
     else:
         return 0
 
-def scale_data(thedata):
+def scale_to_unity(thedata):
     # scale a data set so that it's max value is unity
     # R. Sheehan 28 - 4 - 2014
 
-    maxval = np.amax(thedata) # find the maximum value
-    minval = np.amin(thedata) # find the minimum value
+    FUNC_NAME = ".scale_to_unity()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
-    if maxval > 0.0:
-        scaleddata = thedata / maxval
-    elif maxval == 0.0 and minval < 0.0:
-        scaleddata = thedata / minval
+    try:
+        if thedata is not None and len(thedata) > 0:
+            maxval = np.amax(thedata) # find the maximum value
+            minval = np.amin(thedata) # find the minimum value
 
-    return scaleddata
+            if maxval > 0.0:
+                scaleddata = thedata / maxval
+            elif maxval == 0.0 and minval < 0.0:
+                scaleddata = thedata / minval
+
+            return scaleddata
+        else:
+            return None
+            raise Exception
+    except Exception:
+        print(ERR_STATEMENT)
+
+def scale_data(thedata, scale_value):
+    # scale a data set by some value
+    # thedata must be numpy array
+    # can always use np.asarray(thedata) if thedata is a list
+    # R. Sheehan 15 - 1 - 2019
+
+    FUNC_NAME = ".scale_data()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
+
+    try:
+        c1 = True if thedata is not None else False
+        c2 = True if len(thedata) > 0 else False
+        c3 = True if math.fabs(scale_value) > 0.0 else False
+
+        if c1 and c2 and c3:   
+            scaleddata = thedata / scale_value            
+            return scaleddata
+        else:
+            return None
+            raise Exception
+    except Exception:
+        print(ERR_STATEMENT)
 
 def divide_vectors(vecA, vecB):
     # divide the contents of vecA by the contents of vecB
