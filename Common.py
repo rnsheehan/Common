@@ -865,7 +865,7 @@ def scale_data(thedata, scale_value):
         c3 = True if math.fabs(scale_value) > 0.0 else False
 
         if c1 and c2 and c3:   
-            scaleddata = thedata / scale_value            
+            scaleddata = thedata * scale_value            
             return scaleddata
         else:
             return None
@@ -1313,14 +1313,22 @@ def convert_dB(value, ref_level):
     # convert some value to dB scale relative to reference ref_level
     # V_{dB} = 10 log_{10}(value / ref_level)
 
-    if abs(ref_level) > 0.0:
-        ratio = abs(value) / abs(ref_level)
-        if ratio < 0.0 or ratio == 0.0:
-            return 1.0e-6
+    FUNC_NAME = ".convert_dB()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
+
+    try:
+        if abs(ref_level) > 0.0:
+            ratio = abs(value) / abs(ref_level)
+            if ratio < 0.0 or ratio == 0.0:
+                return 1.0e-6
+            else:
+                return 10.0*math.log10(ratio)
         else:
-            return 10.0*math.log10(ratio)
-    else:
-        return -1.0
+            return -1.0
+            raise Exception
+    except Exception:
+        print(ERR_STATEMENT)
+
 
 def convert_C_K(Cvalue):
     # convert temperature in degrees Celcius to degrees Kelvin
