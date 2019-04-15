@@ -369,7 +369,13 @@ def write_data(thepath, thedata, loud = False):
     ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
-        if thepath == "" or thedata == None or len(thedata) == 0:
+
+        c1 = True if thepath == '' else False
+        #c2 = True if thedata == None else False
+        c3 = True if len(thedata) == 0 else False
+        c4 = c1 and c3
+
+        if c4:
             raise Exception
         else:
             thefile = open(thepath, "w")
@@ -392,7 +398,7 @@ def write_matrix(thepath, thedata, delim = ', ', quiet = 0):
     # R. Sheehan 7 - 8 - 2014
 
     try:
-        thefile = file(thepath, "w")
+        thefile = open(thepath, "w")
 
         if thefile.closed:
             print("Could not open ", thefile.name)
