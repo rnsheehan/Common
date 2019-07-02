@@ -357,9 +357,10 @@ def write_two_columns(thepath, first_line, col1_data, col2_data, wr_mode):
     except IOError:
         print("Error: Common.write_two_columns()")
         print("Could not open file",thepath)
-    except Exception:
+    except Exception as e:
         print("Error: Common.write_two_columns()")
         print("Input lists were not defined correctly")
+        print(e)
 
 def write_data(thepath, thedata, loud = False):
     # write a vector containing data to a file
@@ -390,8 +391,9 @@ def write_data(thepath, thedata, loud = False):
                 thefile.close()
                 
                 if loud: print("File:",thepath,"closed\n")
-    except Exception:
+    except Exception as e:
         print(ERR_STATEMENT)
+        print(e)
 
 def write_matrix(thepath, thedata, delim = ', ', quiet = 0):
     # write a matrix of data to a file
@@ -422,8 +424,9 @@ def write_matrix(thepath, thedata, delim = ', ', quiet = 0):
 
         # delete the file object
         del thefile
-    except Exception:
+    except Exception as e:
         print("\nError: Common.write_matrix()")
+        print(e)
 
 def read_matrix(thepath, delimiter = ',', ignore_first_line = False, loud = False):
     # read an array of data from a file
@@ -741,8 +744,9 @@ def average_data(file_str, loud = False):
             return average
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.average_data()")
+        print(e)
 
 def average_data_known_files(file_list, loud = False):
     # compute the average of multiple sets of data
@@ -778,9 +782,10 @@ def average_data_known_files(file_list, loud = False):
             return average
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.average_data_known_files()")
         print("file_list is empty")
+        print(e)
 
 def average_error_data(file_str, avg_file_name, err_file_name, loud = False):
     # compute the average of multiple sets of data
@@ -853,8 +858,9 @@ def scale_to_unity(thedata):
         else:
             return None
             raise Exception
-    except Exception:
+    except Exception as e:
         print(ERR_STATEMENT)
+        print(e)
 
 def scale_data(thedata, scale_value):
     # scale a data set by some value
@@ -876,8 +882,9 @@ def scale_data(thedata, scale_value):
         else:
             return None
             raise Exception
-    except Exception:
+    except Exception as e:
         print(ERR_STATEMENT)
+        print(e)
 
 def divide_vectors(vecA, vecB):
     # divide the contents of vecA by the contents of vecB
@@ -898,9 +905,10 @@ def divide_vectors(vecA, vecB):
             return result
         else:
             return None
-    except Exception:
+    except Exception as e:
         print("\nError: Common.divide_vectors()")
         print("Error: Cannot divide two vectors of unequal length\n")
+        print(e)
 
 def linear_fit(xdata, ydata, initial_apprs, loud = False):
     # generate a linear fit to the data sets that are input
@@ -957,11 +965,12 @@ def linear_fit(xdata, ydata, initial_apprs, loud = False):
                 return None
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.linear_fit()")
         if c1 == False: print("Error: xdata is empty or not an array")
         if c2 == False: print("Error: ydata is empty or not an array")
         if c3 == False: print("Error: xdata and ydata have different lengths")
+        print(e)
         return None
 
 def quadratic_fit(xdata, ydata, initial_apprs, show_plots = 0):
@@ -1007,11 +1016,12 @@ def quadratic_fit(xdata, ydata, initial_apprs, show_plots = 0):
                 return None
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Common.quadratic_fit()")
         if c1 == False: print("Error: xdata is empty or not an array")
         if c2 == False: print("Error: ydata is empty or not an array")
         if c3 == False: print("Error: xdata and ydata have different lengths")
+        print(e)
         return None
 
 def index_max_val(data):
@@ -1026,9 +1036,10 @@ def index_max_val(data):
             return [max_val, max_indx]
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.index_max_val")
         print("data is None")
+        print(e)
 
 def index_max_val_numpy(data):
     # return the index at which a maximum values occurs
@@ -1042,9 +1053,10 @@ def index_max_val_numpy(data):
             return [max_val, max_indx]
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.index_max_val_numpy")
         print("data is None")
+        print(e)
 
 def index_some_val_numpy(data, value):
     # find the closest element in a numpy array to value
@@ -1056,9 +1068,10 @@ def index_some_val_numpy(data, value):
             return [value, the_indx]
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.index_some_val_numpy")
         print("data is None")
+        print(e)
 
 def sort_multi_col(data):
     # given a data set of the form data = [ [v1, v2, ..., vn], [v1, v2, ..., vn], [v1, v2, ..., vn],.... ]
@@ -1097,11 +1110,12 @@ def integrate(x_data, y_data):
 
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Common.integrate()")
         if c1 == False: print("x_data is not defined")
         if c2 == False: print("y_data is not defined")
         if c3 == False: print("x_data and y_data have different lengths")
+        print(e)
 
 def list_diff(x_lst, y_lst): 
     # compute the difference between two lists
@@ -1117,9 +1131,10 @@ def list_diff(x_lst, y_lst):
         else:
             return None
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Common.list_diff")
         print("input lists have different lengths")
+        print(e)
 
 def list_convert_dBm_mW(x_lst): 
     # convert values in a list from dBm to mW
@@ -1134,9 +1149,10 @@ def list_convert_dBm_mW(x_lst):
         else:
             return None
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Common.list_convert_dBm_mW")
         print("input list is empty")
+        print(e)
 
 def list_convert_mW_dBm(x_lst): 
     # convert values in a list from mW to dBm
@@ -1151,9 +1167,10 @@ def list_convert_mW_dBm(x_lst):
         else:
             return None
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Common.list_convert_mW_dBm")
         print("input list is empty")
+        print(e)
 
 def list_search(x_lst, value, start_here, tolerance, loud = False, rec_depth = 0):
 
@@ -1210,8 +1227,9 @@ def list_search(x_lst, value, start_here, tolerance, loud = False, rec_depth = 0
                 raise Exception
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.list_search()")
+        print(e)
 
 def list_has_negative(data):
     # check that all values in data are positive
@@ -1230,8 +1248,9 @@ def list_has_negative(data):
             return any(item < 0 for item in data)
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Common.list_has_negative()")
+        print(e)
 
 """
 Unit Conversions
@@ -1332,8 +1351,9 @@ def convert_dB(value, ref_level):
         else:
             return -1.0
             raise Exception
-    except Exception:
+    except Exception as e:
         print(ERR_STATEMENT)
+        print(e)
 
 
 def convert_C_K(Cvalue):
@@ -1367,11 +1387,12 @@ def convert_Split_Power_Reading(power_value, split_ratio_low, split_ratio_high):
             return convert_PmW_PdBm(mW_value)
         else: 
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Common.convert_Split_Power_Reading")
         if c1 == False: print("Error: power_value = 0")
         if c2 == False: print("Error: split_ratio does not sum to unity")
         if c3 == False: print("Error: split_ratio_low is not positive")
+        print(e)
         return -1
 
 def convert_Split_Power_Readings(power_data, split_ratio_low, split_ratio_high):
@@ -1395,9 +1416,10 @@ def convert_Split_Power_Readings(power_data, split_ratio_low, split_ratio_high):
             return converted_power_data
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.convert_Split_Power_Readings()")
         if c1 == False or c2 == False: print("Cannot operate on empty list\n")
+        print(e)
         return None
 
 def convert_Log_Scale(the_data):
@@ -1421,9 +1443,10 @@ def convert_Log_Scale(the_data):
             return converted_data
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.convert_Log_Scale()")
         if c1 == False or c2 == False: print("Cannot operate on empty list\n")
+        print(e)
         return None
 
 # generic plot function
@@ -1464,13 +1487,14 @@ def plot_this(h_data, v_data, curve_label = "", x_label = "X (units)", y_label =
             plt.close()
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.plot_this()")
         if c1 == False: print("h_data is not defined")
         if c2 == False: print("v_data is not defined")
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
+        print(e)
 
 def plot_this_with_linear_fit(h_data, v_data, curve_label = "", x_label = "X (units)", y_label = "Y (units)", plt_title = "", plt_range = None, fig_name = "", loud = False):
     # a much needed generic plot function
@@ -1518,10 +1542,11 @@ def plot_this_with_linear_fit(h_data, v_data, curve_label = "", x_label = "X (un
             plt.close()
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Common.plot_this()")
         if c1 == False: print("h_data is not defined")
         if c2 == False: print("v_data is not defined")
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
+        print(e)
