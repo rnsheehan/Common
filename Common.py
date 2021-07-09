@@ -1079,6 +1079,24 @@ def sort_multi_col(data):
     # sort is performed in place
 
     data.sort(key=lambda data: float(data[0]) )
+    
+def sort_two_col(list1, list2):
+        
+    # sort two lists according to data in list1
+    # R. Sheehan 9 - 7 - 2021
+    
+    try:
+        if list1 is not None and list2 is not None:
+            toSrt = sorted( zip( list1, list2 ) ) # sort the two lists together
+            tuples = zip( *toSrt ) # form a list of tuples
+            # unpack the data into two sorted lists
+            return [list(tuple) for tuple in tuples]
+        else:
+            raise Exception
+    except Exception as e:
+        print("\nError: Common.sort_two_col")
+        print("one of the inputs is empty")
+        print(e)
 
 def transpose_multi_col(data):
     # generate the transpose of a multi-column list
