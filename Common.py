@@ -946,7 +946,10 @@ def linear_fit(xdata, ydata, initial_apprs, loud = False):
             # retval = scipy.optimize.leastsq(errfunc, p0[:], args=(xdata, ydata), Dfun = None, full_output = 1)
 
             if success:
-                if loud: print("Fit polynomial is ",p1[0],"+",p1[1],"x")
+                if loud: 
+                    print("Fit polynomial is ",p1[0],"+",p1[1],"x")
+                    print("Intercept: ",p1[0])
+                    print("Slope: ",p1[1])
 
                 #if loud:
                 #    plot(xdata, ydata, "r^", xdata, fitfunc(p1, xdata), "g-")
