@@ -177,6 +177,23 @@ def read_data(thepath, quiet = 0):
 
             return datapts
 
+def head(filename, nlines):
+    
+    # read the head (i.e. first N lines) of a file
+    # store the result as a list of strings
+    # R. Sheehan 1 - 3 - 2022
+
+    FUNC_NAME = ".head()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
+
+    try:
+        with open(filename) as myfile:
+            head = [next(myfile) for x in range(nlines)]
+        return head
+    except Exception as e:
+        print(ERR_STATEMENT)
+        print(e)
+
 def read_two_columns(name, delimiter = ',', quiet = 0):
     
     # read two columns of data from a file
