@@ -1349,7 +1349,7 @@ def convert_PmW_PdBm(mWvalue):
     # P_{dBm} = 10 * \log_{10}{ ( P_{mW} / 1 mW ) }
 
     if mWvalue < 0.0 or mWvalue == 0.0:
-        return 1.0e-6
+        return 1.0e-10
     else:
         return ( 10.0*( math.log10( mWvalue ) ) )
 
