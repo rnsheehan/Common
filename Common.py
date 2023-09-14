@@ -82,6 +82,10 @@ def extract_values_from_string(the_string):
     # this should return all integer and float values contained in a string
     values = re.findall("[-+]?\d+[\.]?\d*", the_string) 
 
+    # this should return all integer, float and scientific notataion values contained in a string
+    #match_number = re.compile('-?\ *[0-9]+\.?[0-9]*(?:[Ee]\ *-?\ *[0-9]+)?')
+    #values = re.findall("-?\d+.?\d*(?:[Ee]-\d+)?", the_string) 
+
     if values:
         return values
     else:
