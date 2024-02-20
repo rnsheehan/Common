@@ -416,17 +416,26 @@ def write_data(thepath, thedata, loud = False):
         print(ERR_STATEMENT)
         print(e)
 
-def write_matrix(thepath, thedata, delim = ', ', quiet = 0):
+def write_matrix(thepath, thedata, delim = ', ', loud = False):
     # write a matrix of data to a file
     # R. Sheehan 7 - 8 - 2014
+
+    # Attempted to update
+    # but then I realised nunpy.save exists
+    # https://numpy.org/doc/stable/reference/generated/numpy.savetxt.html
+    # R. Sheehan 8 - 2 - 2024
+
+    FUNC_NAME = ".write_matrix()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         thefile = open(thepath, "w")
 
         if thefile.closed:
-            print("Could not open ", thefile.name)
+            ERR_STATEMENT = ERR_STATEMENT + '\nCould not open: ' + thefile.name
+            raise Exception
         else:
-            if quiet:
+            if loud:
                 print("The file",thefile.name,"is open")
 
             nrows = len(thedata)
@@ -446,7 +455,7 @@ def write_matrix(thepath, thedata, delim = ', ', quiet = 0):
         # delete the file object
         del thefile
     except Exception as e:
-        print("\nError: Common.write_matrix()")
+        print(ERR_STATEMENT)
         print(e)
 
 def read_matrix(thepath, delimiter = ',', ignore_first_line = False, loud = False):
