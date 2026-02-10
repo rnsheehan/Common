@@ -32,7 +32,7 @@ import sys # access system routines
 
 import math
 import scipy
-import numpy as np
+import numpy
 import matplotlib.pyplot as plt
 
 #from scipy.interpolate import interp1d # module for interpolation in 1D
@@ -162,7 +162,7 @@ def read_data(thepath, quiet = 0):
         # check that the files are available
         if thefile.closed:
             print("%(path)s could not be opened"%{"path":thepath})
-            datapts = np.array([])
+            datapts = numpy.array([])
             return datapts # return an empty array
         else:
             if quiet:
@@ -172,7 +172,7 @@ def read_data(thepath, quiet = 0):
 
             nlines = count_lines(thedata, thepath) # count the number of data points
 
-            datapts = np.zeros([nlines]) # create an array of zeros of length nlines
+            datapts = numpy.zeros([nlines]) # create an array of zeros of length nlines
 
             i=0
             for lines in thedata:
@@ -491,7 +491,7 @@ def read_matrix(thepath, delimiter = ',', ignore_first_line = False, loud = Fals
 
         if loud: print("rows = ",nrows,"cols = ",ncols)
 
-        #datapts = np.zeros([nrows, ncols]) # create an array of zeros of length nlines
+        #datapts = numpy.zeros([nrows, ncols]) # create an array of zeros of length nlines
         datapts = list_2D_array(nrows, ncols)
             
         for i in range(0, nrows, 1 ):
@@ -578,7 +578,7 @@ def numpy_1D_array(size):
 
     try:
         if size > 0:
-            return np.zeros( [ size ] )
+            return numpy.zeros( [ size ] )
         else:
             raise ValueError
     except ValueError:
@@ -593,7 +593,7 @@ def numpy_2D_array(rows, columns):
 
     try:
         if rows > 0 and columns > 0:
-            return np.zeros( [ rows, columns ] )
+            return numpy.zeros( [ rows, columns ] )
         else:
             raise ValueError
     except ValueError:
@@ -733,7 +733,35 @@ def delete_files(file_extension, proceed = False):
 
         del thefiles
 
+def Move_Files(destination, file_list, loud = False):
+    """
+    Move a list of files from one location to another
 
+    R. Sheehan 9 - 2 - 2026
+    """
+
+    FUNC_NAME = ".Move_Files()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
+
+    try:
+        if os.path.isdir(destination):
+            if len(file_list) > 0:
+                for i in range(0, len(file_list), 1):
+                    if os.path.exists(destination + file_list[i]):
+                        # Do nothing, file already exists in destination location
+                        if loud: print("File not moved:",destination + file_list[i],"already exists")
+                    else:
+                        # move file to new destination
+                        os.rename(file_list[i], destination + file_list[i])
+            else:
+                ERR_STATEMENT += "\nNo files moved, file_list is empty"
+                raise Exception
+        else:
+            ERR_STATEMENT += "\nFiles not moved." + "Location:",destination,"does not exist"
+            raise Exception
+    except Exception as e:
+        print(ERR_STATEMENT)
+        print(e)
 """
 Data Analysis
 
@@ -769,7 +797,7 @@ def average_data(file_str, loud = False):
             # average data across each row
             for ii in range(0, ndata, 1):
                       
-                average.append( np.mean( get_row(data, ii) ) )
+                average.append( numpy.mean( get_row(data, ii) ) )
             
                 if loud: print(average[ii])
 
@@ -807,7 +835,7 @@ def average_data_known_files(file_list, loud = False):
             # average data across each row
             for ii in range(0, ndata, 1):
                       
-                average.append( np.mean( get_row(data, ii) ) )
+                average.append( numpy.mean( get_row(data, ii) ) )
             
                 if loud: print(average[ii])
 
@@ -853,11 +881,11 @@ def average_error_data(file_str, avg_file_name, err_file_name, loud = False):
             
             row = get_row(data, ii)
 
-            if loud: print(np.amax(row),",", np.amin(row),",",np.amax(row)-np.amin(row))
+            if loud: print(numpy.amax(row),",", numpy.amin(row),",",numpy.amax(row)-numpy.amin(row))
             
-            average.append( np.mean( row ) )
+            average.append( numpy.mean( row ) )
             
-            error.append( abs(np.amax(row) - np.amin(row)) )
+            error.append( abs(numpy.amax(row) - numpy.amin(row)) )
 
             del row
 
@@ -880,8 +908,8 @@ def scale_to_unity(thedata):
 
     try:
         if thedata is not None and len(thedata) > 0:
-            maxval = np.amax(thedata) # find the maximum value
-            minval = np.amin(thedata) # find the minimum value
+            maxval = numpy.amax(thedata) # find the maximum value
+            minval = numpy.amin(thedata) # find the minimum value
 
             if maxval > 0.0:
                 scaleddata = thedata / maxval
@@ -899,7 +927,7 @@ def scale_to_unity(thedata):
 def scale_data(thedata, scale_value):
     # scale a data set by some value
     # thedata must be numpy array
-    # can always use np.asarray(thedata) if thedata is a list
+    # can always use numpy.asarray(thedata) if thedata is a list
     # R. Sheehan 15 - 1 - 2019
 
     FUNC_NAME = ".scale_data()" # use this in exception handling messages
@@ -956,7 +984,7 @@ def linear_fit(xdata, ydata, initial_apprs, loud = False):
     
     # R. Sheehan 23 - 9 - 2014
 
-    # if data is not originally stored as numpy array use the numpy command np.asarray( data ) when calling
+    # if data is not originally stored as numpy array use the numpy command numpy.asarray( data ) when calling
 
     try:
         c1 = True if xdata is not None else False
@@ -993,7 +1021,7 @@ def linear_fit(xdata, ydata, initial_apprs, loud = False):
                 #    ylabel("y")
                 #    legend(('Data', 'Fit'),loc='best')
                 #    ax = axes()
-                #    axis( [np.min(xdata), np.max(xdata), np.min(ydata), np.max(ydata)] )
+                #    axis( [numpy.min(xdata), numpy.max(xdata), numpy.min(ydata), numpy.max(ydata)] )
                 #    show()
 
                 return p1
@@ -1017,7 +1045,7 @@ def quadratic_fit(xdata, ydata, initial_apprs, show_plots = 0):
     # for quadratic a x^{2} + b x + c
     # R. Sheehan 23 - 9 - 2014
 
-    # if data is not originally stored as numpy array use the numpy command np.asarray( data ) when calling
+    # if data is not originally stored as numpy array use the numpy command numpy.asarray( data ) when calling
 
     try:
         c1 = True if xdata is not None else False
@@ -1084,8 +1112,8 @@ def index_max_val_numpy(data):
 
     try:
         if data is not None:
-            max_val = np.amax(data)
-            max_indx = np.where(data == max_val)
+            max_val = numpy.amax(data)
+            max_indx = numpy.where(data == max_val)
 
             return [max_val, max_indx]
         else:
@@ -1100,7 +1128,7 @@ def index_some_val_numpy(data, value):
 
     try:
         if data is not None:
-            the_indx = np.where(data == value)
+            the_indx = numpy.where(data == value)
 
             return [value, the_indx]
         else:
@@ -1305,6 +1333,65 @@ def list_has_negative(data):
             raise Exception
     except Exception as e:
         print("Error: Common.list_has_negative()")
+        print(e)
+
+def Combine_Statistics(avg_arr, stdev_arr, counts_arr, equal_sample_sizes = True, loud = False):
+
+    """
+    Combine averages and standard deviations from multiple different measurements into a single value
+    Account for unequal sample sizes if necessary
+
+    Input:
+        avg_arr: numpy array of floats giving averages from different measurements
+        stdev_arr: numpy array of floats giving std. dev. from different measurements
+        count_arr: numpy array of ints giving sample size for each measurement
+
+    Output:
+        avg_combined, std_combined
+
+    R. Sheehan 28 - 1 - 2026
+    """
+
+    # Is it possible to compute a single average and a single std. deviation from avg and std
+    # from all previous measurements? Yes, it is provided you know the no. samples used to compute
+    # each previous avg and std. dev. 
+    # for more information consult the following
+    # https://stats.stackexchange.com/questions/55999/is-it-possible-to-find-the-combined-standard-deviation?noredirect=1&lq=1
+    # https://stats.stackexchange.com/questions/43031/how-to-prove-that-averaging-averages-of-different-partitions-of-a-dataset-produc
+    # https://stats.stackexchange.com/questions/10441/how-to-calculate-the-variance-of-a-partition-of-variables?noredirect=1&lq=1
+
+    FUNC_NAME = ".Combine_Statistics()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
+
+    try:
+        c1 = True if len(avg_arr) > 0 else False
+        c2 = True if len(stdev_arr) > 0 else False
+        c3 = True if len(counts_arr) > 0 else False
+        c4 = True if len(counts_arr) == len(stdev_arr) else False
+        c5 = True if len(counts_arr) == len(avg_arr) else False
+        c10 = c1 and c2 and c3 and c4 and c5
+
+        if c10:
+            avg_combined = numpy.average(avg_arr) if equal_sample_sizes else numpy.average(avg_arr, weights=counts_arr)
+            # must always use counts_arr when computing combined std. dev. because it include Bessel Correction for finite sample sizes
+            # In the case of equal sample sizes, no. samples does not quite cancel out from formula for combined std. dev. 
+            # whereas it does in the case of combined avg
+            numer = denom = 0.0
+            denom = numpy.sum(counts_arr) - 1
+            for i in range(0, len(stdev_arr), 1):
+                numer += (counts_arr[i] - 1)*stdev_arr[i]**2 + counts_arr[i]*(avg_arr[i] - avg_combined)**2
+            std_combined = math.sqrt(numer / denom)
+            if loud:
+                print()
+                print("Combined Value: %(v2)0.4f +/- %(v3)0.4f (V)"%{"v2":avg_combined, "v3":std_combined})
+            return avg_combined, std_combined
+        else:
+            if c1 is False: ERR_STATEMENT = ERR_STATEMENT + '\nNo data contained in avg_arr'
+            if c2 is False: ERR_STATEMENT = ERR_STATEMENT + '\nNo data contained in stdev_arr'
+            if c3 is False or c4 is False or c5 is False: ERR_STATEMENT = ERR_STATEMENT + '\nInput arrays are not correctly sized'            
+            raise Exception
+    except Exception as e:
+        print(ERR_STATEMENT)
         print(e)
 
 """
@@ -1565,7 +1652,7 @@ def plot_this_with_linear_fit(h_data, v_data, curve_label = "", x_label = "X (un
 
         if c6:
 
-            lin_fit = linear_fit(np.asarray(h_data), np.asarray(v_data), [3.0, -5.0])
+            lin_fit = linear_fit(numpy.asarray(h_data), numpy.asarray(v_data), [3.0, -5.0])
 
             # make the plot
             fig = plt.figure()
