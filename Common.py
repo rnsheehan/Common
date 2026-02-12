@@ -1609,7 +1609,7 @@ def plot_this(h_data, v_data, curve_label = "", x_label = "X (units)", y_label =
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if curve_label is not "":
+            if curve_label != "":
                 ax.plot(h_data, v_data, "r*", lw = 2, ms = 10, label = curve_label)
                 ax.legend(loc = 'best')
             else:
@@ -1618,11 +1618,11 @@ def plot_this(h_data, v_data, curve_label = "", x_label = "X (units)", y_label =
             plt.xlabel(x_label, fontsize = 17)
             plt.ylabel(y_label, fontsize = 17)
             
-            if plt_title is not "": plt.title(plt_title)
+            if plt_title != "": plt.title(plt_title)
             if plt_range is not None: plt.axis( plt_range )
 
             # plot endmatter
-            if fig_name is not "": plt.savefig(fig_name)
+            if fig_name != "": plt.savefig(fig_name)
             if loud: plt.show()
             plt.clf()
             plt.cla()
@@ -1658,7 +1658,7 @@ def plot_this_with_linear_fit(h_data, v_data, curve_label = "", x_label = "X (un
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if curve_label is not "":
+            if curve_label != "":
                 ax.plot(h_data, v_data, "r*", ms = 10, label = curve_label)
                 ax.plot([ h_data[0], h_data[-1] ], 
                     [ lin_fit[0] + lin_fit[1]*h_data[0], lin_fit[0] + lin_fit[1]*h_data[-1] ], 
@@ -1673,11 +1673,11 @@ def plot_this_with_linear_fit(h_data, v_data, curve_label = "", x_label = "X (un
             plt.xlabel(x_label, fontsize = 17)
             plt.ylabel(y_label, fontsize = 17)
             
-            if plt_title is not "": plt.title(plt_title)
+            if plt_title != "": plt.title(plt_title)
             if plt_range is not None: plt.axis( plt_range )
 
             # plot endmatter
-            if fig_name is not "": plt.savefig(fig_name)
+            if fig_name != "": plt.savefig(fig_name)
             if loud: plt.show()
             plt.clf()
             plt.cla()
