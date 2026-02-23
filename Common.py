@@ -51,6 +51,14 @@ HC = 1.23984193 # hc [eV.um]
 TWO_PI = 2.0 * math.pi
 
 """
+Numerical Tests
+"""
+def is_multiple(x, y):
+    # test if number x is a multiple of number y
+    # Not sure if it's really needed
+    return (x % y) == 0
+
+"""
 Dictionaries
 """
 # define dictionary to contain the SI prefix values
@@ -1496,7 +1504,6 @@ def convert_dB(value, ref_level):
     except Exception as e:
         print(ERR_STATEMENT)
         print(e)
-
 
 def convert_C_K(Cvalue):
     # convert temperature in degrees Celcius to degrees Kelvin
